@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+:root {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: 16px; /* Base font size increased */
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #f8fafc; /* slate-50 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1; /* slate-300 */
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; /* slate-400 */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-heading {
+  font-family: "Outfit", sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Custom styles for the top bar inputs */
+.nav-input {
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.nav-input:focus {
+  background-color: white;
+  border-color: #111827;
+  outline: 2px solid transparent;
+  box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.1);
+}
+
+/* Tiptap editor specific font styles */
+.ProseMirror {
+  font-family: "Inter", sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3 {
+  font-family: "Outfit", sans-serif;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
+}

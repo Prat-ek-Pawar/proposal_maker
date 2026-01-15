@@ -12,7 +12,7 @@ const port = process.env.PORT || 3000;
 // 1. CORS - MUST BE FIRST
 app.use(
   cors({
-    origin: true, // Dynamically allow any origin that sends request
+    origin: "*", // Dynamically allow any origin that sends request
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,

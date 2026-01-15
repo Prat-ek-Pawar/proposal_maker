@@ -9,22 +9,23 @@ const proposalRoutes = require("./routes/proposalRoutes");
 const app = express();
 const port = process.env.PORT || 3000;
 
+// CORS - Allow All Origins
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+app.options("*", cors()); // Handle preflight
+
 app.use(express.json({ limit: "50mb" }));
+
 // Request Logger
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
 });
-app.use(
-  cors({
-    origin: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  })
-);
-// Handle preflight requests explicitly
-app.options("*", cors());
 
 const MONGO_URI = process.env.MONGO_URI;
 

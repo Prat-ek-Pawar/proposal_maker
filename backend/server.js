@@ -10,7 +10,16 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json({ limit: "50mb" }));
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://proposal-maker.celiyo.com",
+      "http://localhost:3000",
+    ],
+    credentials: true,
+  })
+);
 
 const MONGO_URI = process.env.MONGO_URI;
 

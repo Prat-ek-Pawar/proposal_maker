@@ -4,23 +4,27 @@ dotenv.config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const proposalRoutes = require("./routes/proposalRoutes");
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// 1. Permissive CORS Middleware (Manual for maximum compatibility)
+// 1. Enhanced Permissive CORS Middleware
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  const origin = req.headers.origin || "*";
+  res.setHeader("Access-Control-Allow-Origin", origin);
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, OPTIONS"
   );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, X-Requested-With, Accept"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", "true");
 
-  // Handle Preflight
+  // Handle Preflight OPTIONS request
   if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
+    return res.status(200).end();
   }
   next();
 });

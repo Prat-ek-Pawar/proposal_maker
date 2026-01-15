@@ -5,35 +5,57 @@ const VISUAL_ANALYSIS_SYSTEM_PROMPT =
   'Analyze the text/document provided. Extract visual branding details if found (e.g. mention of specific colors, header content like addresses/emails at top, footer content like disclaimers at bottom). Return valid JSON only: { "primaryColor": "#hex or description", "secondaryColor": "#hex", "headerText": "text found at top", "footerText": "text found at bottom" }. If not found, use null.';
 
 const BASE_PROPOSAL_PROMPT =
-  "You are a Senior Business Consultant and professional proposal writer. Write a COMPREHENSIVE, persuasive, and high-end business proposal in HTML format. \n" +
-  "CORE INSTRUCTIONS:\n" +
-  "1.  **EXPAND MINIMAL INPUTS**: Even if the user provides brief notes (e.g., '30k SEO'), you MUST expand these into professional, detailed paragraphs explaining the strategic approach, standard deliverables, and business value. Use your expertise to fill in standard industry practices for each service.\n" +
-  "2.  **UTILIZE ALL DETAILS**: If the user provides extensive details, incorporate every single one accurately into the proposal.\n" +
-  "3.  **NO HALLUCINATION & NO OVERCOMMITMENTS**: Do not invent features, tools, or results that were not requested or are not industry standard. Avoid unrealistic promises or '100% guarantees'. Be professional, realistic, and commercially sound.\n" +
-  "STRUCTURE GUIDELINES:\n" +
-  "1.  **EXECUTIVE OVERVIEW**: Start with a professional title and a compelling introductory paragraph explaining the project's strategic goal.\n" +
-  "2.  **SERVICE BREAKDOWN**: For EACH service, provide a detailed 'Scope of Work' or 'Strategic Approach'. Explain the 'What', 'How', and 'Why' (Value).\n" +
-  "3.  **WHY US**: Include a concise section highlighting 'The Digitech Solution' as the ideal partner.\n" +
-  "4.  **PRICING**: Use a clear HTML table or styled list. Use the user's provided numbers EXACTLY. If no price is given, use 'TBD' or a placeholder.\n" +
-  "CRITICAL FORMATTING RULES:\n" +
-  "1.  **STRICT HTML**: Use ONLY standard HTML tags (`<strong>`, `<h2>`, `<ul>`, `<li>`, `<table>`). NEVER use Markdown like `**` or `###`.\n" +
-  "2.  **START IMMEDIATELY**: No greetings or filler. Start with the H1/H2 Title.\n" +
-  "3.  **CURRENCY**: Prices MUST be in 'Rs.' or 'INR'. (NO ₹ symbol).\n" +
-  "4.  **SIGNATURE**: Append the exact signature table provided in instructions.";
+  "You are a human-centric Business Consultant and Creative Strategist. Write a high-end, bespoke business proposal in HTML format that feels handcrafted, not AI-generated. \n" +
+  "WRITING STYLE (HUMAN-LIKE):\n" +
+  "1.  **NO ROBOTIC TITLES**: Avoid generic titles like 'Comprehensive Proposal for...'. Use creative, punchy, or consultative titles (e.g., 'Elevating Your Brand Identity: A Strategic Roadmap').\n" +
+  "2.  **CONVERSATIONAL DEPTH**: Write like a consultative partner. Use natural transitions. Avoid repetitive sentence structures and typical AI buzzwords ('In conclusion', 'Moreover', 'Unlock your potential').\n" +
+  "3.  **STORYTELLING**: Frame services as solutions to growth challenges rather than just features. Use a persuasive but grounded tone.\n" +
+  "PREMIUM VISUAL STYLING (INLINE CSS):\n" +
+  '1.  **MODERN TYPOGRAPHY**: Use inline styles for clean typography (e.g., `style="font-family: sans-serif; line-height: 1.6; color: #334155;"`).\n' +
+  '2.  **SECTION SPACING**: Use `<div style="margin-bottom: 40px;">` for distinct sections with clear, elegant headers.\n' +
+  "3.  **SUBTLE ACCENTS**: Use a subtle accent color (e.g., #2563eb or #4f46e5) for important underlines or highlights. Use `<table>` sparingly and only with clean, minimalist styling.\n" +
+  "STRUCTURE:\n" +
+  "1.  **BESPOKE OPENING**: A warm, strategic introduction addressed to the client.\n" +
+  "2.  **THE STRATEGY**: Group related services into a cohesive 'Strategic Roadmap'. Detail the 'How' and 'Why' naturally.\n" +
+  "3.  **INVESTMENT**: A clear, minimalist price breakdown.\n" +
+  "CRITICAL FORMATTING:\n" +
+  "1.  **STRICT HTML**: No Markdown. Use tags like `<div>`, `<span>`, `<strong>`, `<h2>`, `<h3>`.\n" +
+  "2.  **SIGNATURES**: Use the exact table structure below, but ensure it is wrapped in its own styled container for alignment.";
+
+const SIGNATURE_TABLE =
+  "<div style='margin-top: 100px; padding-top: 50px; border-top: 1px solid #e2e8f1;'>\n" +
+  "    <table style='width:100%; border:none; color: #1e293b; font-family: sans-serif;'>\n" +
+  "      <tbody>\n" +
+  "        <tr>\n" +
+  "          <td style='width:50%; padding:20px 0; border:none;'>\n" +
+  "            <p style='margin-bottom: 30px;'>__________________________</p>\n" +
+  "            <p><strong>Vishwajeet Mohol</strong><br><span style='color: #64748b; font-size: 0.9em;'>Founder, The Digitech Solution Pune</span></p>\n" +
+  "          </td>\n" +
+  "          <td style='width:50%; padding:20px 0; border:none; text-align:right;'>\n" +
+  "            <p style='margin-bottom: 30px;'>__________________________</p>\n" +
+  "            <p><strong>Accepted By:</strong><br><span style='color: #64748b; font-size: 0.9em;'>{CLIENT_NAME}</span></p>\n" +
+  "          </td>\n" +
+  "        </tr>\n" +
+  "      </tbody>\n" +
+  "    </table>\n" +
+  "</div>";
 
 const BASE_QUOTATION_PROMPT =
-  "You are a precise Commercial Strategist. Generate a professional commercial QUOTATION in HTML format. \n" +
-  "STRUCTURE GUIDELINES:\n" +
-  "1.  **HEADER**: Start with a professional quotation header including company details.\n" +
-  "2.  **TECH STACK & STRATEGY**: For each line item, briefly mention the technology used and the strategic approach.\n" +
-  "3.  **SIGNATURE**: End with the exact same Signature HTML table block as proposals.\n" +
-  "CRITICAL FORMATTING RULES:\n" +
-  "1.  **NEVER** use Markdown syntax (e.g., no `**bold**`).\n" +
-  "2.  **ALWAYS** use valid HTML tags (`<strong>`, `<table>`).\n" +
-  "3.  **CURRENCY**: Prices MUST be in 'Rs.' or 'INR' (NO ₹ symbol).";
+  "You are a Senior Commercial Strategist. Write a detailed, professional commercial QUOTATION in HTML format that is clear, technically precise, and persuasive. \n" +
+  "STYLING & TONE:\n" +
+  "1.  **PROFESSIONAL CLARITY**: Use a formal yet straightforward business tone. Avoid fluff, but explain the technical value clearly.\n" +
+  '2.  **PREMIUM QUOTATION LAYOUT**: Use minimalist HTML tables with elegant headers (e.g., `style="background: #f8fafc; color: #1e293b; font-weight: 600;"`).\n' +
+  "3.  **TECHNICAL PRECISION**: For development projects, specify tech stack elements (MERN, AWS, etc.) within the line items naturally.\n" +
+  "STRUCTURE:\n" +
+  "1.  **QUOTATION SUMMARY**: Start with a professional header: 'Commercial Quotation: [Project Name]'.\n" +
+  "2.  **SCOPE & PRICING**: Provide a breakdown of deliverables with their associated investment. Use 'Rs.' or 'INR' (NO ₹ symbol).\n" +
+  "3.  **TERMS**: Include a brief section on standard payment terms (e.g., 50% Advance).\n" +
+  "FORMATTING:\n" +
+  "1.  **STRICT HTML**: Use only standard tags. No Markdown.\n" +
+  "2.  **SIGNATURES**: Use the provided SIGNATURE_TABLE constant.";
 
 const STRICT_LAYOUT_PROMPT =
-  " CRITICAL: Do NOT include any Header or Footer or <html>/<body> tags. Only generate the inner body content starting with the Title/Subject. The system handles the surrounding page layout.";
+  " CRITICAL: Only generate the inner content of the document. Do not include <html>, <head>, or <body> tags. Start directly with the main heading.";
 
 const REPLICA_LAYOUT_PROMPT =
   " Generate the document body content matching the trained style's structural flow, but apply the HTML formatting rules strictly.";
@@ -74,56 +96,31 @@ Return ONLY the textual content of the "EVOLVED MASTER PROMPT". Do not include e
 `;
 
 const constructSystemPrompt = (
-  trainedStyle, // This will now be the Master Prompt content
+  trainedStyle,
   useReplica,
   documentType = "proposal",
   clientName = ""
 ) => {
-  // If we have a Master Prompt (trainedStyle), we use it as the source of truth for PROPOSALS.
-  // We just inject dynamic values like Client Name.
-
-  let prompt;
-  if (documentType === "quotation") {
-    prompt = BASE_QUOTATION_PROMPT;
-  } else {
-    prompt = trainedStyle || BASE_PROPOSAL_PROMPT;
-  }
+  let prompt =
+    trainedStyle ||
+    (documentType === "quotation"
+      ? BASE_QUOTATION_PROMPT
+      : BASE_PROPOSAL_PROMPT);
 
   // Inject Client Name
   const clientLabel = clientName || "Client";
   prompt = prompt.replace(/{CLIENT_NAME}/g, clientLabel);
 
   if (!useReplica) {
-    prompt += STRICT_LAYOUT_PROMPT;
+    prompt += "\n" + STRICT_LAYOUT_PROMPT;
   } else {
-    prompt += REPLICA_LAYOUT_PROMPT;
+    prompt += "\n" + REPLICA_LAYOUT_PROMPT;
   }
 
-  // Force signature spacing update
-  if (documentType !== "quotation") {
-    // For Proposals: Large gap for professional print look
-    prompt +=
-      "\n\nCRITICAL: Ensure the signature table has `margin-top: 350px` minimum. Add `<br><br><br><br>` before it.";
-  } else {
-    // For Quotations: Standard spacing, no huge gap, but MUST include the signature table.
-    prompt +=
-      "\n\nCRITICAL: Append the Signature Table at the end of the content. Add EXACTLY 8 line breaks `<br>` before it to ensure spacing for stamping. \n" +
-      "    <br><br><br><br><br><br><br><br>\n" +
-      "    <table style='width:100%; border:none; border-color:transparent; margin-top: 50px;'>\n" +
-      "      <tbody>\n" +
-      "        <tr>\n" +
-      "          <td style='width:50%; padding:10px; border:none;'>\n" +
-      "            <p>__________________________</p>\n" +
-      "            <p><strong>Vishwajeet Mohol</strong><br>Founder, The Digitech Solution Pune</p>\n" +
-      "          </td>\n" +
-      "          <td style='width:50%; padding:10px; border:none; text-align:right;'>\n" +
-      "            <p>__________________________</p>\n" +
-      "            <p><strong>Accepted By:</strong><br>{CLIENT_NAME}</p>\n" +
-      "          </td>\n" +
-      "        </tr>\n" +
-      "      </tbody>\n" +
-      "    </table>";
-  }
+  // Final Signature Injection logic
+  prompt +=
+    "\n\nCRITICAL: Append the following Signature Block at the end of your response. Ensure it has a high margin-top (at least 200px) from the previous content.\n" +
+    SIGNATURE_TABLE;
 
   return prompt;
 };

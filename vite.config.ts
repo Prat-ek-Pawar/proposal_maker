@@ -27,4 +27,9 @@ export default defineConfig({
   optimizeDeps: {
     include: ["@react-pdf/renderer", "base64-js"],
   },
+  server: {
+    proxy: {
+      "/api": "http://localhost:3000",
+    },
+  },
 });

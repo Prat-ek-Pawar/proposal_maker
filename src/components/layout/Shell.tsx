@@ -85,13 +85,13 @@ export const Shell = () => {
         
         {/* Logo & Branding */}
         <div className="flex items-center gap-4 shrink-0 w-full md:w-auto justify-between md:justify-start">
-            <div className="flex items-center gap-2.5">
-                <div className="bg-slate-900 text-white p-1.5 rounded-lg shadow-sm">
-                   <div className="w-4 h-4 rounded-full bg-gradient-to-tr from-blue-400 to-purple-500" />
+            <div className="flex items-center gap-3">
+                <div className="bg-slate-900 text-white p-2 md:p-2.5 rounded-xl shadow-md transition-transform hover:scale-105">
+                   <div className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-gradient-to-tr from-blue-400 to-purple-500 shadow-inner" />
                 </div>
-                <div className="flex flex-col">
-                    <span className="text-sm font-heading font-bold tracking-tight text-slate-900 leading-tight">PROPOSAL GEN</span>
-                    <span className="text-[10px] text-slate-500 font-medium tracking-wide">ENTERPRISE EDITION</span>
+                <div className="flex flex-col justify-center">
+                    <span className="text-lg md:text-xl font-heading font-extrabold tracking-tight text-slate-900 leading-none">PROPOSAL GEN</span>
+                    <span className="text-[11px] md:text-xs text-slate-500 font-bold tracking-widest uppercase mt-0.5">Enterprise Edition</span>
                 </div>
             </div>
             

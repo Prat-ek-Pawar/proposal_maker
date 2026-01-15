@@ -13,7 +13,6 @@ import { clsx } from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import { debounce } from 'lodash';
 import { useUiStore } from '../../store/useUiStore';
-import { API_BASE_URL } from '../../config';
 
 const ToolbarButton = ({ 
   onClick, 
@@ -263,7 +262,7 @@ export const Editor = () => {
   const handleAiSubmit = async (description: string) => {
     setIsGenerating(true);
     try {
-        const response = await fetch(`${API_BASE_URL}/api/generate-proposal`, {
+        const response = await fetch('/api/generate-proposal', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 

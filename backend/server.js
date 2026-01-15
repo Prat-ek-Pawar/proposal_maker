@@ -17,7 +17,7 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-app.options("*", cors()); // Handle preflight
+app.options(/.*/, cors()); // Handle preflight
 
 app.use(express.json({ limit: "50mb" }));
 
@@ -44,7 +44,7 @@ app.get("/api/health", (req, res) =>
 app.use("/api", proposalRoutes);
 
 // Catch-all for API 404s
-app.use("/api/*", (req, res) => {
+app.use("/api", (req, res) => {
   console.log(`404 Hit: ${req.method} ${req.url}`);
   res.status(404).json({ error: "API Route Not Found", path: req.url });
 });

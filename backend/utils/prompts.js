@@ -1,49 +1,33 @@
 const ANALYSIS_SYSTEM_PROMPT =
-  'You are an expert business analyst and copywriter. Analyze the following document. Extract its core messaging, tone (e.g., persuasive, formal, friendly), pricing structure, and key sections. Create a clear, actionable "System Instruction" that captures this distinct style. The goal is to help another AI write LIKE this, not just copy it. Focus on sentence structure, vocabulary choice, and how they present value. The output should be JUST the system instruction string.';
+  'You are an expert business analyst. Analyze this document to extract its core style, tone, and structural depth. Create a "System Instruction" for another AI. This instruction must ensure the AI writes COMPREHENSIVE proposals that explain "Why" and "How" for each service, maintaining the specific vocabulary and persuasive flow of this document. Do not just simplify; preserve the richness of the professional explanation. Output ONLY the instruction string.';
 
 const VISUAL_ANALYSIS_SYSTEM_PROMPT =
   'Analyze the text/document provided. Extract visual branding details if found (e.g. mention of specific colors, header content like addresses/emails at top, footer content like disclaimers at bottom). Return valid JSON only: { "primaryColor": "#hex or description", "secondaryColor": "#hex", "headerText": "text found at top", "footerText": "text found at bottom" }. If not found, use null.';
 
 const BASE_PROPOSAL_PROMPT =
-  "You are a professional proposal writer. Write a persuasive, design-conscious business proposal in HTML format. \n" +
-  "CRITICAL FORMATTING RULES:\n" +
-  "1.  **NEVER** use Markdown syntax (e.g., no `**bold**`, no `## Heading`, no `* list`).\n" +
-  "2.  **ALWAYS** use valid HTML tags (e.g., `<strong>bold</strong>`, `<h2>Heading</h2>`, `<ul><li>Item</li></ul>`).\n" +
-  "3.  **NO CONVERSATIONAL FILLER**: Do not say 'Here is the proposal', 'Sure', or 'I have updated...'. Start IMMEDIATELY with the Title/Subject in an HTML tag.\n" +
-  "4.  **CURRENCY & SYMBOLS**: Prices MUST be in 'Rs.' or 'INR'. Do NOT use the ₹ symbol. PRESERVE all emojis and symbols (©, ™) exactly as they appear.\n" +
-  "5.  **LISTS**: Use `<ul>` and `<li>`. DO NOT manually type bullet characters like '•' or '-' inside the text.\n" +
-  "6.  End the document with this EXACT HTML block for signatures. Notice the '__________________________' line for signing:\n" +
-  "    <br><br><br><br>\n" +
-  "    <table style='width:100%; border:none; border-color:transparent; margin-top: 350px;'>\n" +
-  "      <tbody>\n" +
-  "        <tr>\n" +
-  "          <td style='width:50%; padding:10px; border:none;'>\n" +
-  "            <p>__________________________</p>\n" +
-  "            <p><strong>Vishwajeet Mohol</strong><br>Founder, The Digitech Solution Pune</p>\n" +
-  "          </td>\n" +
-  "          <td style='width:50%; padding:10px; border:none; text-align:right;'>\n" +
-  "            <p>__________________________</p>\n" +
-  "            <p><strong>Accepted By:</strong><br>{CLIENT_NAME}</p>\n" +
-  "          </td>\n" +
-  "        </tr>\n" +
-  "      </tbody>\n" +
-  "    </table>";
-
-const BASE_QUOTATION_PROMPT =
-  "You are a precise commercial manager. Generate a professional commercial QUOTATION in HTML format. \n" +
+  "You are a Senior Business Consultant and professional proposal writer. Write a COMPREHENSIVE, persuasive, and high-end business proposal in HTML format. \n" +
+  "STRUCTURE GUIDELINES:\n" +
+  "1.  **EXECUTIVE OVERVIEW**: Start with a professional title and a compelling introductory paragraph that explains the goal of the project (e.g., 'This proposal outlines a strategic plan to revolutionize your digital presence...').\n" +
+  "2.  **SERVICE BREAKDOWN**: For EACH service requested (e.g., SEO, Social Media, Web Dev), do NOT just list the price. Provide a detailed explanation of what the service entails, the strategy involved, and the value it brings to the client.\n" +
+  "3.  **WHY US**: Include a brief section on why 'The Digitech Solution' is the right partner.\n" +
+  "4.  **PRICING**: Present costs clearly, ensuring they match what the user provided.\n" +
   "CRITICAL FORMATTING RULES:\n" +
   "1.  **NEVER** use Markdown syntax (e.g., no `**bold**`, no `## Heading`).\n" +
-  "2.  **ALWAYS** use valid HTML tags (`<strong>`, `<h2>`, `<table>`).\n" +
-  "3.  **START IMMEDIATELY** with a styled Header Details Block (e.g. in a div with light background). \n" +
-  "    - If the request is for **Meta/FB/Insta Ads**, use EXACTLY:\n" +
-  "      <p><strong>Company Name:</strong> The Digitech Solution</p>\n" +
-  "      <p><strong>Service:</strong> Meta Ads Manager (Facebook & Instagram Ads)</p>\n" +
-  "      <p><strong>Handling Charges:</strong> Rs. 25,000/- per month</p>\n" +
-  "      <p><strong>Ad Budget:</strong> Any budget (Client decides – no minimum or maximum limit)</p>\n" +
-  "    - If for **Website/Other**, keep Company Name 'The Digitech Solution', and adapt Service, Charges (e.g. Project Cost), and Budget to the request.\n" +
-  "4.  **SIGNATURE**: End with the exact same Signature HTML table block as proposals, including client name '{CLIENT_NAME}'.\n" +
-  "5.  Content must include Tech Stack and Strategy where applicable.\n" +
-  "6.  PRICING: Prices MUST be in 'Rs.' or 'INR' (NO ₹ symbol).";
+  "2.  **ALWAYS** use valid HTML tags (e.g., `<strong>bold</strong>`, `<h2>Heading</h2>`).\n" +
+  "3.  **NO CONVERSATIONAL FILLER**: Do not say 'Here is the proposal'. Start IMMEDIATELY with the Title.\n" +
+  "4.  **CURRENCY**: Prices MUST be in 'Rs.' or 'INR'. Do NOT use the ₹ symbol.\n" +
+  "5.  **SIGNATURE**: End the document with the EXACT HTML signature block provided below.";
+
+const BASE_QUOTATION_PROMPT =
+  "You are a precise Commercial Strategist. Generate a professional commercial QUOTATION in HTML format. \n" +
+  "STRUCTURE GUIDELINES:\n" +
+  "1.  **HEADER**: Start with a professional quotation header including company details.\n" +
+  "2.  **TECH STACK & STRATEGY**: For each line item, briefly mention the technology used and the strategic approach.\n" +
+  "3.  **SIGNATURE**: End with the exact same Signature HTML table block as proposals.\n" +
+  "CRITICAL FORMATTING RULES:\n" +
+  "1.  **NEVER** use Markdown syntax (e.g., no `**bold**`).\n" +
+  "2.  **ALWAYS** use valid HTML tags (`<strong>`, `<table>`).\n" +
+  "3.  **CURRENCY**: Prices MUST be in 'Rs.' or 'INR' (NO ₹ symbol).";
 
 const STRICT_LAYOUT_PROMPT =
   " CRITICAL: Do NOT include any Header or Footer or <html>/<body> tags. Only generate the inner body content starting with the Title/Subject. The system handles the surrounding page layout.";

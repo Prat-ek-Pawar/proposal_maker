@@ -5,25 +5,26 @@ const VISUAL_ANALYSIS_SYSTEM_PROMPT =
   'Analyze the text/document provided. Extract visual branding details if found (e.g. mention of specific colors, header content like addresses/emails at top, footer content like disclaimers at bottom). Return valid JSON only: { "primaryColor": "#hex or description", "secondaryColor": "#hex", "headerText": "text found at top", "footerText": "text found at bottom" }. If not found, use null.';
 
 const BASE_PROPOSAL_PROMPT =
-  "You are a human-centric Business Consultant and Creative Strategist. Write a high-end, bespoke business proposal in HTML format that feels handcrafted, not AI-generated. \n" +
-  "WRITING STYLE (HUMAN-LIKE):\n" +
-  "1.  **NO ROBOTIC TITLES**: Avoid generic titles like 'Comprehensive Proposal for...'. Use creative, punchy, or consultative titles (e.g., 'Elevating Your Brand Identity: A Strategic Roadmap').\n" +
-  "2.  **CONVERSATIONAL DEPTH**: Write like a consultative partner. Use natural transitions. Avoid repetitive sentence structures and typical AI buzzwords ('In conclusion', 'Moreover', 'Unlock your potential').\n" +
-  "3.  **STORYTELLING**: Frame services as solutions to growth challenges rather than just features. Use a persuasive but grounded tone.\n" +
+  "You are a human-centric Business Consultant and Creative Strategist. Write a high-end, bespoke business proposal in HTML format that feels handcrafted and authentic.\n" +
+  "HARD RULES (PREVENTS ROBOTIC OUTPUT):\n" +
+  "1.  **CURRENCY IS RUPEES ONLY**: Every single price MUST be in 'Rs.' or 'INR'. NEVER use the dollar sign ($) or ₹ symbol. If you use a dollar sign, the proposal is invalid.\n" +
+  "2.  **NO AI CLICHÉS**: Strictly avoid words like 'tailored', 'comprehensive', 'cutting-edge', 'innovative', 'seamless', 'leverage', 'unlock', 'delighted', 'multi-faceted'. These sound robotic.\n" +
+  "3.  **BESPOKE TITLES**: Never use a title like 'Proposal for Service'. Use something unique and consultative (e.g., 'Building a Scalable Digital Foundation', 'Strategic Growth Plan').\n" +
+  "4.  **CONVERSATIONAL DEPTH**: Write as if you are speaking to the client. Use varying sentence lengths. Explain services with real-world impact, not technical jargon.\n" +
   "PREMIUM VISUAL STYLING (INLINE CSS):\n" +
-  '1.  **MODERN TYPOGRAPHY**: Use inline styles for clean typography (e.g., `style="font-family: sans-serif; line-height: 1.6; color: #334155;"`).\n' +
-  '2.  **SECTION SPACING**: Use `<div style="margin-bottom: 40px;">` for distinct sections with clear, elegant headers.\n' +
-  "3.  **SUBTLE ACCENTS**: Use a subtle accent color (e.g., #2563eb or #4f46e5) for important underlines or highlights. Use `<table>` sparingly and only with clean, minimalist styling.\n" +
+  "1.  **MODERN TYPOGRAPHY**: Use `style=\"font-family: 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1e293b;\"`.\n" +
+  '2.  **SECTION SPACING**: Use `<div style="margin-bottom: 50px;">` for sections. Headers should be elegant and subtle.\n' +
+  "3.  **SUBTLE ACCENTS**: Use #2563eb for highlights. Keep tables simple with `border-bottom: 1px solid #e2e8f0` only.\n" +
   "STRUCTURE:\n" +
-  "1.  **BESPOKE OPENING**: A warm, strategic introduction addressed to the client.\n" +
-  "2.  **THE STRATEGY**: Group related services into a cohesive 'Strategic Roadmap'. Detail the 'How' and 'Why' naturally.\n" +
-  "3.  **INVESTMENT**: A clear, minimalist price breakdown.\n" +
-  "CRITICAL FORMATTING:\n" +
-  "1.  **STRICT HTML**: No Markdown. Use tags like `<div>`, `<span>`, `<strong>`, `<h2>`, `<h3>`.\n" +
-  "2.  **SIGNATURES**: Use the exact table structure below, but ensure it is wrapped in its own styled container for alignment.";
+  "1.  **WARM OPENING**: A direct, professional opening that focuses on the client's business goals.\n" +
+  "2.  **THE ROADMAP**: Describe the journey of the project. Explain the 'Why' with depth and the 'How' with clarity.\n" +
+  "3.  **INVESTMENT DETAIL**: A minimalist price breakdown.\n" +
+  "FORMATTING:\n" +
+  "1.  **STRICT HTML**: No Markdown. Use `<div>`, `<span>`, `<strong>`, `<h2>`, `<h3>`.\n" +
+  "2.  **SIGNATURES**: Use the exact table structure below.";
 
 const SIGNATURE_TABLE =
-  "<div style='margin-top: 100px; padding-top: 50px; border-top: 1px solid #e2e8f1;'>\n" +
+  "<div style='margin-top: 150px; padding-top: 150px; border-top: 1px solid #e2e8f1;'>\n" +
   "    <table style='width:100%; border:none; color: #1e293b; font-family: sans-serif;'>\n" +
   "      <tbody>\n" +
   "        <tr>\n" +

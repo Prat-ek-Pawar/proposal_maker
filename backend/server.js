@@ -57,7 +57,7 @@ app.get("/api/history", proposalController.getHistory);
 app.delete("/api/history/:id", proposalController.deleteHistory);
 
 // Catch-all for UNMATCHED API routes (Must return JSON)
-app.all("/api/(.*)", (req, res) => {
+app.all(/^\/api\/.*/, (req, res) => {
   console.log(`API 404: ${req.method} ${req.url}`);
   res.status(404).json({ error: "API Route Not Found", path: req.url });
 });

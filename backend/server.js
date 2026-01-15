@@ -10,6 +10,11 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json({ limit: "50mb" }));
+// Request Logger
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
 app.use(
   cors({
     origin: [

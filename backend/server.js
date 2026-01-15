@@ -45,18 +45,23 @@ mongoose
 
 const path = require("path");
 
-// 3. API ROUTES (Explicitly defined to avoid router mounting issues)
+// 3. API ROUTES
 const proposalController = require("./controllers/proposalController");
 
 // Health Check
-app.get("/api/health", (req, res) => res.status(200).json({ status: "ok" }));
+app.get("/health", (req, res) => res.status(200).json({ status: "ok" }));
 
-// Main API Routes
+// Main API Routes (Prefix removed to match proxy behavior)
+app.post("/generate-proposal", proposalController.generateProposal);
+app.get("/history", proposalController.getHistory);
+app.delete("/history/:id", proposalController.deleteHistory);
+
+// Also keep the /api prefixed ones for backwards compatibility or dev
 app.post("/api/generate-proposal", proposalController.generateProposal);
 app.get("/api/history", proposalController.getHistory);
 app.delete("/api/history/:id", proposalController.deleteHistory);
 
-// Catch-all for UNMATCHED API routes (Must return JSON)
+// Catch-all for UNMATCHED API routes
 app.all(/^\/api\/.*/, (req, res) => {
   console.log(`API 404: ${req.method} ${req.url}`);
   res.status(404).json({ error: "API Route Not Found", path: req.url });

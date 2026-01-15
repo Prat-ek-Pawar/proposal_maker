@@ -35,7 +35,18 @@ mongoose
 
 const path = require("path");
 
+// Health Check
+app.get("/api/health", (req, res) =>
+  res.status(200).json({ status: "ok", timestamp: new Date() })
+);
+
 app.use("/api", proposalRoutes);
+
+// Catch-all for API 404s
+app.use("/api/*", (req, res) => {
+  console.log(`404 Hit: ${req.method} ${req.url}`);
+  res.status(404).json({ error: "API Route Not Found", path: req.url });
+});
 
 app.use(express.static(path.join(__dirname, "../dist")));
 

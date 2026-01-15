@@ -262,7 +262,7 @@ export const Editor = () => {
   const handleAiSubmit = async (description: string) => {
     setIsGenerating(true);
     try {
-        const response = await fetch('/api/generate-proposal', {
+        const response = await fetch('https://proposal-maker.celiyo.com/api/generate-proposal', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 

@@ -15,16 +15,7 @@ app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
 });
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://proposal-maker.celiyo.com",
-      "http://localhost:3000",
-    ],
-    credentials: true,
-  })
-);
+app.use(cors({ origin: "*" }));
 
 const MONGO_URI = process.env.MONGO_URI;
 
